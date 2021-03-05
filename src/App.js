@@ -1,22 +1,22 @@
-import logo from './logo.svg';
+import 'firebase/auth';
+import firebaseConn from './firebaseConn';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+
 import './App.css';
 
+import SendInvites from './SetInvites';
+import SignUp from './SignUp';
+
+const auth = firebaseConn.auth();
+
 function App() {
+  const [user] = useAuthState(auth);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        {user ? <SendInvites user={user} /> : <SignUp />}
       </header>
     </div>
   );
